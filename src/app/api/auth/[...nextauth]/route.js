@@ -16,16 +16,16 @@ const handler= NextAuth({
     }),
     Credentials({
       credentials: {
-        email: { label: "Email", type: "email" } ,
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
       authorize: async (credentials) => {
         // Connect to MongoDB
-       const mongoResult= await connect();
-console.log(mongoResult);
+        await connect();
+
         // Find user by email
         const user = await User.findOne({ email: credentials.email });
-console.log(user);
+
         // Verify password
         if (user && bcrypt.compareSync(credentials.password, user.password)) {
           // If password matches, return user object
@@ -41,36 +41,44 @@ console.log(user);
   pages:{
     signIn: '/login',
     signOut: '/auth/signout',
-
-    signup: '/signup',
     // signUp: '/signup',
     // error: '/auth/error',
     // verifyRequest: '/auth/verify-request',
   },
   
 
-  
+  // Optional: Specify JWT configuration if needed
+  // jwt: {
+  //   secret: process.env.JWT_SECRET,
+  // },
+
+  // Optional: Add custom pages for authentication
+  // pages: {
+  //   signIn: '/auth/signin',
+  //   signOut: '/auth/signout',
+  //   error: '/auth/error',
+  //   verifyRequest: '/auth/verify-request',
+  // },
+
+  // Optional: Add event listeners if needed
+  // events: {
+  //   signIn: async (message) => { /* custom sign in event */ },
+  //   signOut: async (message) => { /* custom sign out event */ },
+  // },
+
+  // Optional: Add custom callbacks if needed
+  // callbacks: {
+  //   signIn: async (user, account, profile) => { return Promise.resolve(true) },
+  //   redirect: async (url, baseUrl) => { return Promise.resolve(baseUrl) },
+  //   session: async (session, user) => { return Promise.resolve(session) },
+  //   jwt: async (token, user, account, profile, isNewUser) => { return Promise.resolve(token) }
+  // },
+
+  // Optional: Customize session behavior if needed
+  // session: {
+  //   jwt: true,
+  // },
 });
 
 
 export {handler as GET, handler as POST}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
