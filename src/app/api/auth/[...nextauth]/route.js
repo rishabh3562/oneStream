@@ -6,79 +6,79 @@ import Credentials from 'next-auth/providers/credentials';
 import { connect } from '@/dbConfig/dbConfig';
 import User from '@/models/userModel';
 import bcrypt from 'bcryptjs';
-console.log(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID)
-const handler= NextAuth({
-  // Configure one or more authentication providers
+console.log("console",process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID)
+console.log(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET)
+
+const handler = NextAuth({
   providers: [
-   Google({
+    Google({
         clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
         clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
     }),
     Credentials({
-      credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
-      },
-      authorize: async (credentials) => {
-        // Connect to MongoDB
-        await connect();
-
-        // Find user by email
-        const user = await User.findOne({ email: credentials.email });
-
-        // Verify password
-        if (user && bcrypt.compareSync(credentials.password, user.password)) {
-          // If password matches, return user object
-          return Promise.resolve({ id: user._id, email: user.email });
-        } else {
-          // If email or password is incorrect, return null
-          return Promise.resolve(null);
-        }
-      }
-    }),
-    // Add more authentication providers as needed
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" },
+      }),
   ],
+
+  callbacks: {
+    async authorize(credentials) {
+      // Connect to MongoDB
+     const connection= await connect();
+      console.log("connection",connection);
+      // Find user by email or username
+      const user = await User.findOne({
+        $or: [{ email: credentials.email }, { username: credentials.username }],
+      });
+      console.log("user",user);
+      // If user does not exist, create a new user
+      if (!user) {
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(credentials.password, 10);
+
+        // Create a new user object
+        const newUser = new User({
+          email: credentials.email,
+          username: credentials.username,
+          password: hashedPassword,
+          // Add additional user data here...
+        });
+
+        // Save the new user to the database
+        const savedUser = await newUser.save();
+
+        // Return the user object with an identifier (e.g., email or ID)
+        return Promise.resolve({ id: savedUser._id, email: savedUser.email });
+      }
+
+      // If user already exists, verify password and return user object
+      if (bcrypt.compareSync(credentials.password, user.password)) {
+        return Promise.resolve({ id: user._id, email: user.email });
+      } else {
+        // If password is incorrect, return null
+        return Promise.resolve(null);
+      }
+    },
+  },
   pages:{
     signIn: '/login',
     signOut: '/auth/signout',
-    // signUp: '/signup',
+    signUp: '/signup',
     // error: '/auth/error',
     // verifyRequest: '/auth/verify-request',
   },
-  
-
-  // Optional: Specify JWT configuration if needed
-  // jwt: {
-  //   secret: process.env.JWT_SECRET,
-  // },
-
-  // Optional: Add custom pages for authentication
-  // pages: {
-  //   signIn: '/auth/signin',
-  //   signOut: '/auth/signout',
-  //   error: '/auth/error',
-  //   verifyRequest: '/auth/verify-request',
-  // },
-
-  // Optional: Add event listeners if needed
-  // events: {
-  //   signIn: async (message) => { /* custom sign in event */ },
-  //   signOut: async (message) => { /* custom sign out event */ },
-  // },
-
-  // Optional: Add custom callbacks if needed
-  // callbacks: {
-  //   signIn: async (user, account, profile) => { return Promise.resolve(true) },
-  //   redirect: async (url, baseUrl) => { return Promise.resolve(baseUrl) },
-  //   session: async (session, user) => { return Promise.resolve(session) },
-  //   jwt: async (token, user, account, profile, isNewUser) => { return Promise.resolve(token) }
-  // },
-
-  // Optional: Customize session behavior if needed
-  // session: {
-  //   jwt: true,
-  // },
+database: process.env.MONGODB_URI,
+  secret: process.env.SECRET,
+  session: {
+    jwt: true,
+  },
+  jwt: {
+    secret: process.env.SECRET,
+  },
+  debug: true,
+  // Enable debug messages in the console if you are having problems
+  debug: true,
 });
 
-
-export {handler as GET, handler as POST}
+export {handler as GET , handler as POST};

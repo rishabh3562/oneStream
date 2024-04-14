@@ -1,7 +1,7 @@
-"use client"
-import { signIn } from 'next-auth/react';
+"use client";
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import { signIn } from 'next-auth/react'; // Import signUp from next-auth/react
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import Link from 'next/link';
 
 export default function SignupPage() {
-  const navigation = useRouter();
+  const router = useRouter(); // Use useRouter hook from next/router
 
   const [user, setUser] = useState({
     email: '',
@@ -34,10 +34,14 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
+      // Call the signUp function with credentials provider
       const result = await signIn('credentials', {
         email: user.email,
         password: user.password,
-        redirect: true,
+        username: user.username,
+        redirect:false,
+        
+        // Add any additional data required for signup
       });
 
       if (result.error) {
@@ -45,7 +49,7 @@ export default function SignupPage() {
         console.error('Signup error:', result.error);
       } else {
         // Signup successful, navigate to login page
-        navigation.navigate('/login');
+        router.push('/login');
       }
     } catch (error) {
       // Handle other errors
