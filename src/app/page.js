@@ -1,20 +1,29 @@
-"use client"
-import { useSession, signIn, signOut } from "next-auth/react"
 
+import { UserButton, auth } from "@clerk/nextjs";
+import Image from "next/image";
+import Link from "next/link";
+export default function Home() {
+  const {user,userId,getToken}= auth();
+  return (
+    <div>
+     <Link href="/home"> <a>home</a></Link>
+      <h1>Page</h1>
+      <UserButton afterSignOut={<div>Bye</div>} />
+      <div>
+        <h2>User</h2>
+        <pre>{JSON.stringify(user, null, 2)}</pre>
+      </div>
+      <div>
+        <h2>UserId</h2>
+        <pre>{JSON.stringify(userId, null, 2)}</pre>
+      </div>
+      <div>
+        <h2>Token</h2>
+        <pre>{JSON.stringify(getToken(), null, 2)}</pre>
+      </div>
 
-export default function Component() {
-  const { data:session,status, } = useSession()
-  console.log(session)
-  if(session) {
-    return <>
-      Signed in as {session.user.email} <br/>
-      <button onClick={() => signOut()}>Sign out</button>
-    </>
-  }
-  return (<>
-    Not signed in <br/>
-    <button onClick={() => signIn("credentials")}>Sign in using credentails</button>
-<br/>
-    <button onClick={() => signIn("google")}>Sign in using Google</button> 
-  </>)
+      
+    </div>
+  );
 }
+
