@@ -1,10 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-   
-        images: {
-          domains: ['www.gravatar.com'],
-        },
-      
-};
+const nextConfig = {};
 
 export default nextConfig;
