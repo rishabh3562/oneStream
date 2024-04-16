@@ -1,3 +1,4 @@
+
 import { UserButton, auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +22,9 @@ export default function Home() {
         <pre>{JSON.stringify(getToken(), null, 2)}</pre>
       </div>
 
+
       
     </div>
   );
 }
+
