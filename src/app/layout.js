@@ -1,9 +1,10 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider,auth } from '@clerk/nextjs'
 // import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import SessionWrapper from "@/components/SessionWrapper";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,6 +14,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const {user,userId,getToken}= auth();
   return (
     <>
 
@@ -20,6 +22,7 @@ export default function RootLayout({ children }) {
  <SessionWrapper>
   <html lang="en">
    <body className={inter.className}>
+   <Navbar/>
   {children}
    </body> 
 {/* <script src="https://apis.google.com/js/platform.js" async defer></script> */}

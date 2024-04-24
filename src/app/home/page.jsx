@@ -6,11 +6,17 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import ConnectWithOAuthButton from '@/components/ConnectWithOAuthButton'
+import Subscribe from '@/components/Hero/Subscribe'
+import FirstHero from '@/components/Hero/FirstHero'
+import Info from '@/components/Hero/Info'
 // import GoogleLoginButton from "@/components/login"
 // import GoogleLogoutButton from "@/components/logout"
 const Hero = () => {
   return (<>
-    <div>Home</div>
+    {/* <div>Home</div> */}
+    <FirstHero/>
+    <Subscribe/>
+    <Info/>
     <ConnectWithOAuthButton/>
     {/* <GoogleLoginButton/> */}
     {/* <GoogleLogoutButton/> */}
