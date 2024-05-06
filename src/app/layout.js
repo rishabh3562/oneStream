@@ -1,12 +1,23 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
+
+import "@/app/globals.css"
+import { Inter  } from "next/font/google"
+
+import { cn } from "@/lib/utils"
+
+const fontSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+
+// import { Inter } from "next/font/google";
+// import "./globals.css";
 import { ClerkProvider,auth } from '@clerk/nextjs'
 // import { GoogleOAuthProvider } from '@react-oauth/google';
-
+import Sidebar from "@/components/Sidebar";
 import SessionWrapper from "@/components/SessionWrapper";
 import Navbar from "@/components/Navbar";
-
-const inter = Inter({ subsets: ["latin"] });
+import  Segments from '@/components/Segment';
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -15,15 +26,26 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   const {user,userId,getToken}= auth();
+
+
   return (
     <>
 
 <ClerkProvider>
  <SessionWrapper>
-  <html lang="en">
-   <body className={inter.className}>
-   <Navbar/>
+  <html lang="en" suppressHydrationWarning>
+   <body className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )} >
+   {/* <body className={`${inter.className} flex justify-between items-start`}> */}
+   {/* <Navbar/> */}
+ {/* <Segments/> */}
+
+   {/* <main className="w-full h-full"> */}
+
   {children}
+   {/* </main> */}
    </body> 
 {/* <script src="https://apis.google.com/js/platform.js" async defer></script> */}
   </html>
@@ -34,3 +56,5 @@ export default function RootLayout({ children }) {
     </>
   );
 }
+
+

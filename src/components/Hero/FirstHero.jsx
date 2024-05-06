@@ -1,18 +1,28 @@
 import dashboardWhite from '@/assets/dashboardwhite.png'
 import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 export default function HeroSectionCentredWithImage() {
     return (
       <>
         {/* Hero */}
-        <div className="relative overflow-hidden py-24 lg:py-32">
-        <div className="container">
-        <div className="max-w-2xl text-center mx-auto">
+        <div className="relative overflow-hidden  lg:py-32">
+          <div className="container">
+            <div className="max-w-2xl text-center mx-auto">
               <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
                 Nano-Frontiers: Reshaping Tech
               </h1>
               <p className="mt-3 text-xl text-muted-foreground">
                 Nano-computing breaks barriers, unlocking new tech horizons.
               </p>
+              <div className="mt-8 gap-3 flex justify-center">
+             <Link href={'/sign-in'}>
+                <Button size={"lg"}>Get started</Button>
+              </Link> 
+                <Button size={"lg"} variant={"outline"}>
+                  Learn more
+                </Button>
+              </div>
             </div>
             <div className="mt-10 relative max-w-5xl mx-auto">
              <Image

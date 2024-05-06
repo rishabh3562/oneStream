@@ -1,5 +1,21 @@
-import { SignUp } from "@clerk/nextjs";
+"use client"
+
+import { SignUp } from '@clerk/nextjs';
+import { useState } from 'react';
+
+function SignUpPage() {
+  const [userData, setUserData] = useState(null);
+
  
-export default function Page() {
-  return <SignUp />;
+
+  return (
+    <div>
+      <h1>Sign Up</h1>
+      <SignUp
+      redirectUrl='/choice'
+      />
+    </div>
+  );
 }
+
+export default SignUpPage;

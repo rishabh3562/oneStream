@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const withMT = require("@material-tailwind/react/utils/withMT");
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -22,6 +23,8 @@ module.exports = {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
+        gray1:"#dfe1e2",
+        offwhite:"#f8fafc ",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -72,6 +75,24 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
+    screens: {
+
+      'xs': '475px', // => @media (min-width: 475px) { ... } from 475px to 639px
+      'sm': '640px',
+      // => @media (min-width: 640px) { ... } from 640px to 767px
+
+      'md': '768px',
+      // => @media (min-width: 768px) { ... } from 768px to 1023px
+
+      'lg': '1024px',
+      // => @media (min-width: 1024px) { ... } from   1024px to 1279px
+
+      'xl': '1280px', 
+      // => @media (min-width: 1280px) { ... } from 1280px to 1535px
+
+      '2xl': '1536px',
+      // => @media (min-width: 1536px) { ... } from 1536px to 1919px
+    }
   },
   plugins: [require("tailwindcss-animate")],
 }

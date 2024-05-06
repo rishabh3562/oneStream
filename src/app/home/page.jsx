@@ -9,11 +9,13 @@ import ConnectWithOAuthButton from '@/components/ConnectWithOAuthButton'
 import Subscribe from '@/components/Hero/Subscribe'
 import FirstHero from '@/components/Hero/FirstHero'
 import Info from '@/components/Hero/Info'
+import Navbar from '@/components/Navbar'
 // import GoogleLoginButton from "@/components/login"
 // import GoogleLogoutButton from "@/components/logout"
 const Hero = () => {
   return (<>
     {/* <div>Home</div> */}
+    {/* <Navbar/> */}
     <FirstHero/>
     <Subscribe/>
     <Info/>
