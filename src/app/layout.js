@@ -11,7 +11,7 @@ const fontSans = Inter({
 
 // import { Inter } from "next/font/google";
 // import "./globals.css";
-import { ClerkProvider,auth } from '@clerk/nextjs'
+// import { ClerkProvider,auth } from '@clerk/nextjs'
 // import { GoogleOAuthProvider } from '@react-oauth/google';
 import Sidebar from "@/components/Sidebar";
 import SessionWrapper from "@/components/SessionWrapper";
@@ -25,13 +25,13 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const {user,userId,getToken}= auth();
+  // const {user,userId,getToken}= auth();
 
 
   return (
     <>
 
-<ClerkProvider>
+{/* <ClerkProvider> */}
  <SessionWrapper>
   <html lang="en" suppressHydrationWarning>
    <body className={cn(
@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
 {/* <script src="https://apis.google.com/js/platform.js" async defer></script> */}
   </html>
  </SessionWrapper>
-</ClerkProvider>
+{/* </ClerkProvider> */}
 
   
     </>

@@ -1,134 +1,91 @@
-"use client";
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
-import { signIn } from 'next-auth/react'; // Import signUp from next-auth/react
-import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
-export default function SignupPage() {
-  const router = useRouter(); // Use useRouter hook from next/router
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { UserAuthForm } from "@/components/auth/user-auth-from";
 
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-    username: '',
-    type: 'creator',
-  });
-
-  const [buttonDisabled, setButtonDisabled] = useState(true);
-  const [loading, setLoading] = useState(false);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
-  };
-
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      // Call the signUp function with credentials provider
-      const result = await signIn('credentials', {
-        email: user.email,
-        password: user.password,
-        username: user.username,
-        redirect:false,
-        
-        // Add any additional data required for signup
-      });
-
-      if (result.error) {
-        // Handle signup error
-        console.error('Signup error:', result.error);
-      } else {
-        // Signup successful, navigate to login page
-        router.push('/login');
-      }
-    } catch (error) {
-      // Handle other errors
-      console.error('Error during signup:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    const { email, password, username } = user;
-    if (email && password && username) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
-  }, [user]);
-
+export default function signupPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1>{loading ? 'Processing' : 'Signup'}</h1>
-      <hr />
-      <form onSubmit={handleSignup}>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="example@example.com"
-            value={user.email}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="password">Password</Label>
-          <Input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="password"
-            value={user.password}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="username">Username</Label>
-          <Input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="username"
-            value={user.username}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <RadioGroup
-          defaultValue="creator"
-          onChange={(value) =>
-            setUser((prevUser) => ({ ...prevUser, type: value }))
-          }
+    <>
+      <div className="container relative  mt-12 lg:mt-0 lg:h-[800px] flex-col items-center justify-center sm:grid lg:max-w-none lg:grid-cols-2 lg:px-0 ">
+        <Link
+          href="/login"
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            "hidden lg:flex md:absolute md:right-8 md:top-8"
+          )}
         >
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="default" id="r1" />
-            <Label htmlFor="r1">Default</Label>
+          Login
+        </Link>
+        <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
+          <div className="absolute inset-0 bg-zinc-900" />
+          <div className="relative z-20 flex items-center text-lg font-medium">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-2 h-6 w-6"
+            >
+              <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
+            </svg>
+            Acme Inc
           </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="creator" id="r2" />
-            <Label htmlFor="r2">Creator</Label>
+          <div className="relative z-20 mt-auto">
+            <blockquote className="space-y-2">
+              <p className="text-lg">
+                &ldquo;This library has saved me countless hours of work and
+                helped me deliver stunning designs to my clients faster than
+                ever before.&rdquo;
+              </p>
+              <footer className="text-sm">Sofia Davis</footer>
+            </blockquote>
           </div>
-        </RadioGroup>
-        <Button type="submit" disabled={buttonDisabled} className="mb-4">
-          {loading ? 'Signing up...' : 'Signup'}
-        </Button>
-      </form>
-      <Link href="/login">Visit login page</Link>
-    </div>
+        </div>
+        <div className="lg:p-8">
+          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[450px]">
+            <div className="flex flex-col space-y-2 text-center">
+              <h1 className="text-2xl font-semibold tracking-tight">
+                Create an account
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Enter your email below to create your account
+              </p>
+            </div>
+            <UserAuthForm />
+            <p className="px-8 text-center text-sm text-muted-foreground">
+              By clicking continue, you agree to our{" "}
+              <Link
+                href="/terms"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/privacy"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Privacy Policy
+              </Link>
+              .
+            </p>
+            <p className="lg:hidden px-8 text-center text-sm text-muted-foreground">
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="  underline underline-offset-4 hover:text-primary"
+              >
+                Login by clicking here
+              </Link>{" "}
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

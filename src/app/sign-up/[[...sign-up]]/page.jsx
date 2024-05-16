@@ -1,6 +1,6 @@
 "use client"
 
-import { SignUp } from '@clerk/nextjs';
+// import { SignUp } from '@clerk/nextjs';
 import { useState } from 'react';
 
 function SignUpPage() {
@@ -11,9 +11,9 @@ function SignUpPage() {
   return (
     <div>
       <h1>Sign Up</h1>
-      <SignUp
+      {/* <SignUp
       redirectUrl='/choice'
-      />
+      /> */}
     </div>
   );
 }
