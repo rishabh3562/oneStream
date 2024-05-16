@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# OneStream
 
-## Getting Started
+**OneStream** is a cutting-edge content management tool meticulously crafted to streamline the creation, editing, and publication of high-quality videos across diverse digital platforms.
 
-First, run the development server:
+## Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Robust User Management:** Empower your team with distinct roles: Creators and Editors, ensuring seamless collaboration.
+- **Secure Authentication:** Utilize Clerk for secure and hassle-free user authentication, safeguarding your content and data.
+- **Scalable Database Solution:** Leverage the power of Appwrite as the database backend, offering reliability, scalability, and flexibility.
+- **Effortless Video Storage:** Harness the capabilities of AWS S3 for efficient and secure video storage, ensuring rapid access and data integrity.
+- **Seamless Integration:** Integrate seamlessly with the YouTube API (OAuth 2.0) for streamlined video publishing, enhancing your reach and engagement.
+- **Future-Ready:** Explore future integrations for sharing videos on Instagram and Twitter, providing a comprehensive content distribution solution.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Utilized
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Frontend Framework:** `NEXT.js 14`
+- **Backend Database:** `Appwrite`
+- **Authentication Service:** `Clerk`
+- **Cloud Storage:** `AWS S3`
+- **API Integration:** `YouTube API (OAuth 2.0)`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+1. **Clone Repository:** Begin by cloning the repository to your local environment.
+2. **Install Dependencies:** Execute `npm install` to install all necessary dependencies.
+3. **Configuration Setup:** Configure AWS S3 for video storage, Clerk for authentication, and set up Appwrite as the database backend.
+4. **API Configuration:** Obtain OAuth 2.0 credentials for YouTube API integration.
+5. **Environment Variables:** Set up and configure environment variables as per the provided documentation.
+6. **Launch Application:** Start the application by running `npm start` in your terminal.
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **User Authentication:** Users can seamlessly sign in as Creators or Editors using Clerk's secure authentication system.
+2. **Content Workflow:** Navigate through the intuitive workflow to upload, edit, and approve videos collaboratively.
+3. **Publication:** Utilize the integrated YouTube API to publish approved videos effortlessly, expanding your audience reach.
+4. **Future Expansion:** Explore potential integrations for sharing videos on Instagram and Twitter, enhancing your content distribution strategy.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Contribution Guidelines
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+We welcome contributions from the community! 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+This project is licensed under the [MIT License](LICENSE).
