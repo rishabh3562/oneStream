@@ -1,19 +1,10 @@
-"use client";
+'use client';
 
 import React, { useState } from "react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import AWS from "aws-sdk";
+import { uploadFileToS3, deleteFileFromS3, listFilesFromS3, fetchFileFromS3 } from "@/helpers/workers/awsHelper";
 
-import { S3 } from "aws-sdk";
-// Initialize AWS S3
-const s3 = new AWS.S3({
-  accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY,
-  secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
-});
-
-console.log(process.env.NEXT_PUBLIC_AWS_ACCESS_KEY);
-console.log(process.env.NEXT_PUBLIC_AWS_FILE_KEY);
 export default function CreatePostForm({ user }) {
   const [content, setContent] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
@@ -32,18 +23,9 @@ export default function CreatePostForm({ user }) {
       const file = e.target.elements.media.files[0];
       console.log(e);
       console.log("file", file);
-      const fileKey =
-        process.env.NEXT_PUBLIC_AWS_FILE_KEY + `/${Date.now()}-${file.name}`;
-      const s3Response = await s3
-        .upload({
-          Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
-          Key: fileKey,
-          Body: file,
-          ContentType: file.type,
-          ACL: process.env.NEXT_PUBLIC_AWS_ACL_TYPE, // Adjust ACL as per your requirements
-        })
-        .promise();
-      console.log("s3Response", s3Response);
+
+      const s3Response = await uploadFileToS3(file);
+
       // Update status message
       setStatusMessage("created");
     } catch (error) {
@@ -119,7 +101,7 @@ export default function CreatePostForm({ user }) {
           <button
             type="submit"
             className={twMerge(
-              "border rounded-xl px-4 py-2 disabled",
+              "border rounded-xl px-4 py-2",
               buttonDisabled && "opacity-50 cursor-not-allowed"
             )}
             disabled={buttonDisabled}

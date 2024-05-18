@@ -1,4 +1,5 @@
 // "use server"
+"use client"
 import React from 'react'
 import Link from "next/link"
 import {
@@ -28,6 +29,11 @@ import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import Sidebar from './Sidebar'
 import {Breadcrumb,BreadcrumbItem,BreadcrumbPage,BreadcrumbLink,BreadcrumbList,BreadcrumbSeparator,} from "@/components/ui/breadcrumb"
+
+
+import getAppwrite from '@/helpers/init/getAppwrite'
+
+
 const SomeCode =()=>{
   <Sheet>
           <SheetTrigger asChild>
@@ -82,6 +88,7 @@ const SomeCode =()=>{
 }
 
 const BreadCrumbMaker=({BreadCrumbArray})=>{
+
   return(
     <>
    
@@ -109,6 +116,16 @@ return(
 const Navbar = ({BreadCrumbArray,Bcomponent}) => {
 
   
+const {account} =getAppwrite()
+const handleLogout=async ()=>{
+  const session = await account.get();
+  console.log("session clicked",session)
+  const id=session["$id"]
+  if(session){
+    account.deleteSessions();
+  }
+
+}
   return (
 <>
 <header className="sticky 
@@ -143,7 +160,11 @@ top-0 flex h-16 z-50 items-center gap-4 border-b bg-background px-4 md:px-6">
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+               
+                
+           
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

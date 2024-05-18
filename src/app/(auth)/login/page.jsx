@@ -1,93 +1,91 @@
-"use client"
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
-import { Account, Client, Databases, ID } from 'appwrite';
-import getInitialClient from '../../../helpers/getAppwrite' 
-const Login = () => {
-    const router = useRouter();
-    const { client, account, databases } = getInitialClient();
-    const [loading, setLoading] = useState(false);
-    const { register: signUpRegister, handleSubmit, getValues } = useForm();
-    const { register: signInRegister, handleSubmit: loginHandleSubmit } = useForm();
+import Image from "next/image";
+import Link from "next/link";
 
-   useEffect(() => {
-    const fetchData = async () => {
-        try {
-            await account.get();
-            console.log("account mila");
-        } catch (error) {
-            console.log("No users");
-        }
-    };
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import {LoginForm} from "@/components/auth/Login-form";
 
-    fetchData();
-}, []);
-useEffect(() => {
-  const fetchData = async () => {
-      try {
-         const result= await account.get();
-         if(result){
-          router.push('/dashboard');
-         }
-          console.log("account mila result",result);
-      } catch (error) {
-          console.log("No users");
-      }
-  };
-
-  fetchData();
-}, []);
-
-
-
-const handleSignIn = async (data) => {
-  setLoading(true);
-
-  try {
-      const handlerSignInresult=await account.createEmailSession(data.email, data.password);
-      // router.push("/dashboard");
-      console.log("account logged in success ",handlerSignInresult)
-  } catch (error) {
-      console.log(error);
-      setLoading(false);
-  }
-};
-
-    return (
-        <section className='min-h-screen w-full flex items-center justify-center flex-col gap-2 bg-[#121212] text-white'>
-            <h2 className='text-center text-[2.5rem] font-[700]'>Login to Your Account</h2>
-            <p className='text-lg md:w-[500px] text-white/40 text-center'>Drag your way into an extraordinary experience and unleash the possibilities within our platform </p>
-            <div className='flex flex-col lg:flex-row gap-5 items-center mt-5 justify-center xl:justify-evenly w-full max-w-[700px]'>
-
-                <form onSubmit={loginHandleSubmit(handleSignIn)} className='p-4 flex flex-col gap-3'>
-                    <p className='text-sm font-semibold'>Sign In</p>
-                    <input required {...signInRegister("email")} type="text" placeholder='email' className='primary-input' />
-                    <input required {...signInRegister("password")} type="password" placeholder='password' className='primary-input' />
-                    <button type="submit" value="Sign In" className='primary-input primary-gradient grid place-items-center text-snc text-black font-semibold cursor-pointer '>
-                        {loading ? (<img src="/loading2.gif" className='w-7 h-7' alt="loading" />) : "Log in"}
-                    </button>
-                </form>
-
-                <p className='text-2xl font-bold'>/</p>
-
-                <form onSubmit={handleSubmit(handleSignUp)} className='p-4 flex flex-col gap-3'>
-                    <p className='text-sm font-semibold'>Sign Up</p>
-                    <div className='flex gap-3'>
-                        <input required type="text" {...signUpRegister("fname")} placeholder='first name' className='primary-input w-[calc(185px-.375rem)]' />
-                        <input required type="text" {...signUpRegister("lname")} placeholder='last name' className='primary-input w-[calc(185px-.375rem)]' />
-                    </div>
-                    <input required type="email" {...signUpRegister("email")} placeholder='email' className='primary-input' />
-                    <div className='flex gap-3'>
-                        <input required type="password" {...signUpRegister("password")} placeholder='password' className='primary-input w-[calc(270px-0.9rem)]' />
-                        <button type="submit" value="Sign In" className='primary-input primary-gradient grid place-items-center text-black text-sm font-semibold cursor-pointer w-[calc(100px)]'>
-                        {loading ? (<img src="/loading2.gif" className='w-7 h-7' alt="loading" />) : (<p>Sign Up</p>)}
-                    </button>
-                    </div>
-                </form>
+export default function LoginPage() {
+  return (
+    <>
+      <div className="container relative  mt-12 lg:mt-0 lg:h-[800px] flex-col items-center justify-center sm:grid lg:max-w-none lg:grid-cols-2 lg:px-0 ">
+        <Link
+          href="/Signup"
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            "hidden lg:flex md:absolute md:right-8 md:top-8"
+          )}
+        >
+          Sign Up
+        </Link>
+        <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
+          <div className="absolute inset-0 bg-zinc-900" />
+          <div className="relative z-20 flex items-center text-lg font-medium">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-2 h-6 w-6"
+            >
+              <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
+            </svg>
+           One Stream
+          </div>
+          <div className="relative z-20 mt-auto">
+            <blockquote className="space-y-2">
+              <p className="text-lg">
+                &ldquo;This library has saved me countless hours of work and
+                helped me deliver stunning designs to my clients faster than
+                ever before.&rdquo;
+              </p>
+              <footer className="text-sm">Sofia Davis</footer>
+            </blockquote>
+          </div>
+        </div>
+        <div className="lg:p-8">
+          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[450px]">
+            <div className="flex flex-col space-y-2 text-center">
+              <h1 className="text-2xl font-semibold tracking-tight">
+                Login
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Enter your email below to Log into your account
+              </p>
             </div>
-        </section>
-    );
-};
-
-export default Login;
+            <LoginForm />
+            <p className="px-8 text-center text-sm text-muted-foreground">
+              By clicking continue, you agree to our{" "}
+              <Link
+                href="/terms"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/privacy"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Privacy Policy
+              </Link>
+              .
+            </p>
+            <p className="lg:hidden px-8 text-center text-sm text-muted-foreground">
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="  underline underline-offset-4 hover:text-primary"
+              >
+                Login by clicking here
+              </Link>{" "}
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

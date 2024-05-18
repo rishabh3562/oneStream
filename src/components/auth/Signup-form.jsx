@@ -6,16 +6,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import intialClient from "@/helpers/getAppwrite"
+import getAppwrite from "@/helpers/getAppwrite"
 import { handleSignUp } from "@/helpers/authHelper";
 import { Account, Client, Databases, ID } from 'appwrite';
-export function UserAuthForm({ className, ...props }) {
+import { useRouter } from "next/navigation";
+
+export function SignupForm({ className, ...props }) {
+
   const [isLoading, setIsLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [usertype, setUsertype] = React.useState("creator"); // Default value
   const {account,databases,ID}=intialClient();
+  
+  const router=useRouter();
+
+
   async function onSubmit(event) {
     event.preventDefault();
     
@@ -36,6 +43,10 @@ export function UserAuthForm({ className, ...props }) {
 
         const test1=await handleSignUp({email,password,username,usertype});
         console.log("test1",test1)
+        if(test1){
+            router.push('/DashBoard')
+            console.log("?DashBoard")
+        }
     }
     catch(error){
         console.log("auth helper wala nai chala",error)

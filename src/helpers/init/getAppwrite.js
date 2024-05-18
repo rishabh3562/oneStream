@@ -1,6 +1,6 @@
-import { Account, Client, Databases } from "appwrite"
+import { Account, Client, Databases,Storage ,ID } from "appwrite"
 
-const getInitialClient = () => {
+const getAppwrite = () => {
     const client = new Client();
 
     client
@@ -8,8 +8,9 @@ const getInitialClient = () => {
         .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
     const account = new Account(client)
     const databases = new Databases(client)
+    const storage =new Storage(client)
 // console.log(databases)
-    return {client, account, databases}
+    return {client, account, databases,storage,ID}
 }
 
-export default getInitialClient
+export default getAppwrite
