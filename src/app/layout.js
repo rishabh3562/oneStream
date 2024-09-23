@@ -14,7 +14,7 @@ const fontSans = Inter({
 // import { ClerkProvider,auth } from '@clerk/nextjs'
 // import { GoogleOAuthProvider } from '@react-oauth/google';
 import Sidebar from "@/components/Sidebar";
-import SessionWrapper from "@/components/SessionWrapper";
+// import SessionWrapper from "@/components/SessionWrapper";
 import Navbar from "@/components/Navbar";
 import  Segments from '@/components/Segment';
 // const inter = Inter({ subsets: ["latin"] });
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
     <>
 
 {/* <ClerkProvider> */}
- <SessionWrapper>
+ {/* <SessionWrapper> */}
   <html lang="en" suppressHydrationWarning>
    <body className={cn(
           "min-h-screen bg-background font-sans antialiased",
@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
    </body> 
 {/* <script src="https://apis.google.com/js/platform.js" async defer></script> */}
   </html>
- </SessionWrapper>
+ {/* </SessionWrapper> */}
 {/* </ClerkProvider> */}
 
   

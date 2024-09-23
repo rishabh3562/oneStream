@@ -38,3 +38,5 @@ next-env.d.ts
 .vscode
 .next
 rough.txt
+
+package-lock.json
